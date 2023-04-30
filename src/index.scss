@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+$main-color: #121212;
+
+$normal-text-size: calc(10px + 1vmin);
+$small-text-size: calc(10px + 0.5vmin);
+$big-text-size: calc(10px + 1.5vmin);
+
+$box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, .13);

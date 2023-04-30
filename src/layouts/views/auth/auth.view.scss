@@ -1,0 +1,90 @@
+@import '../../../index.scss';
+
+$primary: rgb(182, 157, 230);
+
+.app-logo {
+    height: 8vmin;
+    float: left;
+    padding: 1em;
+}
+
+.session {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    margin: auto auto;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, .12);
+}
+
+.left {
+    width: 220px;
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    display: flex;
+    background-image: url("https://wallpaperaccess.com/full/893194.jpg");
+    background-size: cover;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-position: bottom; /*makes the app logo more visible*/
+    .background-container {
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    svg {
+        height: 40px;
+        width: auto;
+        margin: 20px;
+    }
+
+}
+
+h4 {
+    font-size: $big-text-size;
+    font-weight: 600;
+    color: #000;
+    opacity: .85;
+}
+
+label {
+    font-size: $normal-text-size;
+    color: #000;
+    opacity: .8;
+    font-weight: 400;
+}
+
+form {
+    padding: 40px 30px;
+    background: #fefefe;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 20px;
+
+    h4 {
+        margin-bottom: 20px;
+        color: rgba(#000, .5);
+
+        span {
+            color: rgba(#000, 1);
+            font-weight: 700;
+        }
+    }
+
+    p {
+        line-height: 155%;
+        font-size: $normal-text-size;
+        max-width: 25vw;
+        color: #000;
+        opacity: 0.65;
+        font-weight: 400;
+        margin-bottom: 2vmin;
+    }
+}
