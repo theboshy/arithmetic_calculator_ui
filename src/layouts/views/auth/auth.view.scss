@@ -1,7 +1,5 @@
 @import '../../../index.scss';
 
-$primary: rgb(182, 157, 230);
-
 .app-logo {
     height: 8vmin;
     float: left;
@@ -16,7 +14,15 @@ $primary: rgb(182, 157, 230);
     margin: auto auto;
     background: #ffffff;
     border-radius: 4px;
-    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, .12);
+    box-shadow: 0px 2px 6px -1px $main-color;
+}
+
+.discrete {
+    color: #fd3232;
+    font-size: 14px;
+    border-bottom: solid 1px $main-color;
+    padding-bottom: 4px;
+    font-weight: 300;
 }
 
 .left {
@@ -29,7 +35,9 @@ $primary: rgb(182, 157, 230);
     background-size: cover;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
-    background-position: bottom; /*makes the app logo more visible*/
+    background-position: bottom;
+
+    /*makes the app logo more visible*/
     .background-container {
         -webkit-filter: blur(5px);
         -moz-filter: blur(5px);
@@ -49,13 +57,13 @@ $primary: rgb(182, 157, 230);
 h4 {
     font-size: $big-text-size;
     font-weight: 600;
-    color: #000;
+    color: $main-color;
     opacity: .85;
 }
 
 label {
     font-size: $normal-text-size;
-    color: #000;
+    color: $main-color;
     opacity: .8;
     font-weight: 400;
 }
@@ -70,10 +78,10 @@ form {
 
     h4 {
         margin-bottom: 20px;
-        color: rgba(#000, .5);
+        color: $main-color;
 
         span {
-            color: rgba(#000, 1);
+            color: $main-color;
             font-weight: 700;
         }
     }
@@ -82,7 +90,7 @@ form {
         line-height: 155%;
         font-size: $normal-text-size;
         max-width: 25vw;
-        color: #000;
+        color: $main-color;
         opacity: 0.65;
         font-weight: 400;
         margin-bottom: 2vmin;

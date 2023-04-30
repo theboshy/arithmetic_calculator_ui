@@ -1,13 +1,13 @@
 import React from 'react';
 import './button.component.scss'
 
-export const ButtonComponent = (props: any) => {
+export const ButtonComponent: React.FunctionComponent<any> = ({type = "button", callbackFn, name, id}) => {
 
     const callback = () => {
-        if (props.callback) {
-            props.callback()
+        if (callbackFn) {
+            callbackFn();
         }
     }
 
-    return <button id={props.id} onClick={callback}>{props.name}</button>;
+    return <button id={id} onClick={callback} type={type}>{name}</button>;
 }
