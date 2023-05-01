@@ -6,7 +6,7 @@ import { AuthenticationView } from './layouts/views/auth/auth.view';
 import { DashBoardView } from './layouts/views/dashboard/dashboard.view';
 import React, { ReactNode, useState } from 'react';
 import { ProtectedRoute } from './lib/guard/authentication.guard';
-import { AuthenticationFunction } from './lib/guard.validation/authentication.validator';
+import { AuthenticationFunction } from './lib/guard/guard.validation/authentication.validator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,7 +21,7 @@ const App: React.FunctionComponent<any> = () => {
           <Routes>
             <Route path='/' element={<MainView />} />
             <Route path='/dashboard' element={
-              <ProtectedRoute evaluationFn={evaluationFn} errorChildren={<MainView />}>
+              <ProtectedRoute evaluationFn={evaluationFn} errorChildren={<AuthenticationView />}>
                 <DashBoardView />
               </ProtectedRoute>
             } />

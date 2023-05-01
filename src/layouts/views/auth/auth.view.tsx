@@ -11,6 +11,7 @@ import { apiSources } from '../../../lib/api/sources/sources';
 import { loginService } from '../../../lib/api/authentication.service';
 import { ToastOptions, toast } from 'react-toastify';
 import { TOAST_OPTIONS } from '../../../lib/toast.config/toast.config';
+import { getToken, setToken } from '../../../lib/jwt/jwt.helper';
 
 const AuthenticationSchema = Yup.object().shape({
     username: Yup.string()
@@ -46,12 +47,12 @@ export const AuthenticationView = (props: any) => {
         try {
             const result = await loginService(username, password);
             if (result) {
+                setToken(result.response);
                 toast('welcome back', TOAST_OPTIONS);
-                sessionStorage.setItem('__auth___token____', result.response);
                 navigate("/dashboard")
             }
         } catch (error) {
-
+            toast.error('an internal error occurred', TOAST_OPTIONS);
         }
     }
 
