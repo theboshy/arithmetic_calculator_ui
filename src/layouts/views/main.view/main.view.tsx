@@ -11,9 +11,9 @@ export const MainView = (props: any) => {
         <p>
             fast and efficient arithmetic solutions to improve your math performance.
         </p>
-        <section>
-            <ButtonComponent id="register_button" name="Start Using" callback={() => navigate("/authentication")}/>
-            <ButtonComponent id="api_reference_button" name="Api Reference" callback={() => navigate("/api/reference")}/>
+        <section className="button-wrapper">
+            <ButtonComponent id="register_button" name="Start Using" callbackFn={() => navigate("/authentication/login")} isSecondary={true}/>
+            <ButtonComponent id="api_reference_button" name="Api Reference" callbackFn={() => navigate("/api/reference")} isSecondary={true}/>
         </section>
     </section>;
 }

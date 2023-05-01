@@ -6,17 +6,20 @@ import './auth.view.scss';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { fetchUrl } from '../../../lib/api/api.caller';
+import { apiSources } from '../../../lib/api/sources/sources';
+import { loginService } from '../../../lib/api/authentication.service';
 
 const AuthenticationSchema = Yup.object().shape({
     username: Yup.string()
-        .min(3, 'Too Short!')
-        .max(12, 'Too Long!')
-        .required('Required'),
+        .min(3, 'too Short!')
+        .max(12, 'too Long!')
+        .required('required'),
     password: Yup.string()
-        .min(5, 'Too Short!')
-        .max(15, 'Too Long!')
-        .required('Required')
-        .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+        .min(5, 'too Short!')
+        .max(15, 'too Long!')
+        .required('required')
+        .matches(/[a-zA-Z]/, 'password can only contain Latin letters.'),
 });
 
 const errorParser = (error: any): String | any => {
@@ -36,6 +39,24 @@ const errorParser = (error: any): String | any => {
 
 export const AuthenticationView = (props: any) => {
     const navigate = useNavigate();
+
+    const login = async (username: string, password: string) => {
+        try {
+            const result = await loginService(username, password);
+            console.log(result)
+            if (result.error) {
+                switch (result.status) {
+
+                }
+            } else {
+
+            }
+        } catch (error) {
+
+        }
+    }
+
+
     return <Formik
         initialValues={{
             username: '',
@@ -43,7 +64,8 @@ export const AuthenticationView = (props: any) => {
         }}
         validationSchema={AuthenticationSchema}
         onSubmit={values => {
-            navigate("/authentication")
+            const { username, password } = values;
+            login(username, password)
         }}
     >
         {({ errors, touched }) => (

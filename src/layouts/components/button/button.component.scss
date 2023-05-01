@@ -1,22 +1,52 @@
 @import '../../../index.scss';
 
-button {
+.default {
     width: auto;
     min-width: 1.5vw;
     text-align: center;
-    padding: 1vw 2vw;
-    margin: 1vh 0;
+    padding: 0.5vw 2vw;
+    margin: 1vh 1vw;
     font-size: $small-text-size;
     margin-left: auto;
-    font-weight: 500;
+    font-weight: 600;
     box-shadow: $box-shadow;
     border: 1px black;
-    transition: all .2s ease; /*pretty fast looks more eficient*/
+    transition: all .2s ease;
+    /*pretty fast looks more eficient*/
     outline: 0;
     background-color: $main-color;
     color: white;
+
     &:hover {
         cursor: pointer;
+
+        &:active {
+            transform: scale(.85);
+        }
+    }
+
+}
+
+.is-secondary {
+    width: auto;
+    min-width: 1.5vw;
+    text-align: center;
+    padding: 0.5vw 2vw;
+    margin: 1vh 1vw;
+    font-size: $small-text-size;
+    margin-left: auto;
+    font-weight: 600;
+    box-shadow: $box-shadow;
+    border: 1px black;
+    transition: all .2s ease;
+    /*pretty fast looks more eficient*/
+    outline: 0;
+    background-color: white;
+    color: $main-color;
+
+    &:hover {
+        cursor: pointer;
+
         &:active {
             transform: scale(.85);
         }
