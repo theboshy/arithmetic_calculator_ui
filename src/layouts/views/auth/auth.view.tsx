@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { fetchUrl } from '../../../lib/api/api.caller';
 import { apiSources } from '../../../lib/api/sources/sources';
 import { loginService } from '../../../lib/api/authentication.service';
+import { ToastOptions, toast } from 'react-toastify';
+import { TOAST_OPTIONS } from '../../../lib/toast.config/toast.config';
 
 const AuthenticationSchema = Yup.object().shape({
     username: Yup.string()
@@ -43,13 +45,9 @@ export const AuthenticationView = (props: any) => {
     const login = async (username: string, password: string) => {
         try {
             const result = await loginService(username, password);
-            console.log(result)
-            if (result.error) {
-                switch (result.status) {
-
-                }
-            } else {
-
+            if (result) {
+                toast.error('welcome back', TOAST_OPTIONS);
+                navigate("/dashboard")
             }
         } catch (error) {
 

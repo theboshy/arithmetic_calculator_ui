@@ -9,7 +9,7 @@ import { InternalResponseInterface } from "../interface/internal.response";
  * @returns maximun waits before killing the request
  */
 export const fetchUrl = async (url: string, options?: any, responseType: string = "json", timeout: number = 5000): Promise<InternalResponseInterface> => {
-  const response: InternalResponseInterface = {
+  let response: InternalResponseInterface = {
     error: false,
     errorTrace: null,
     response: null,
@@ -27,7 +27,6 @@ export const fetchUrl = async (url: string, options?: any, responseType: string 
     });
 
     const fetchResponse = await Promise.race([fetchPromise, timeoutPromise]) as any;
-    response.status = fetchResponse.status;
     let data;
     switch (responseType) {
       case "json": {
@@ -39,9 +38,8 @@ export const fetchUrl = async (url: string, options?: any, responseType: string 
         break;
       }*/
     }
-    if (data && !data.error) {
-      response.response = data;
-    }
+    response = data;
+    response.status = fetchResponse.status;
   } catch (error: any) {
     response.error = true;
     response.errorTrace = error.message;
