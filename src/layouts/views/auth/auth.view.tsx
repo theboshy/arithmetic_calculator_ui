@@ -47,6 +47,7 @@ export const AuthenticationView = (props: any) => {
             const result = await loginService(username, password);
             if (result) {
                 toast.error('welcome back', TOAST_OPTIONS);
+                sessionStorage.setItem('__auth___token____', result.response);
                 navigate("/dashboard")
             }
         } catch (error) {
