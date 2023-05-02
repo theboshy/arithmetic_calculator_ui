@@ -6,12 +6,13 @@ import './auth.view.scss';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { fetchUrl } from '../../../lib/api/api.caller';
+import { fetchUrl } from '../../../lib/api/sources/api.caller';
 import { apiSources } from '../../../lib/api/sources/sources';
 import { loginService } from '../../../lib/api/authentication.service';
 import { ToastOptions, toast } from 'react-toastify';
 import { TOAST_OPTIONS } from '../../../lib/toast.config/toast.config';
 import { getToken, setToken } from '../../../lib/jwt/jwt.helper';
+import { USER_NAME_REFRENCE } from '../../../lib/session.constants/session.constants';
 
 const AuthenticationSchema = Yup.object().shape({
     username: Yup.string()
@@ -48,6 +49,7 @@ export const AuthenticationView = (props: any) => {
             const result = await loginService(username, password);
             if (result) {
                 setToken(result.response);
+                sessionStorage.setItem(USER_NAME_REFRENCE, username)
                 toast('welcome back', TOAST_OPTIONS);
                 navigate("/dashboard")
             }

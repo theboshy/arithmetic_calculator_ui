@@ -1,0 +1,65 @@
+.select-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  
+    select {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin: 0;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      border: 1px solid #ccc;
+      background-color: #121212;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      text-indent: 0.01px;
+      text-overflow: '';
+    }
+  
+    select::-ms-expand {
+      display: none;
+    }
+  
+    .select-arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 6px 0 6px;
+      border-color: #2e2e2e transparent transparent transparent;
+      pointer-events: none;
+    }
+  
+    @media only screen and (max-width: 600px) {
+      label {
+        font-size: 14px;
+      }
+  
+      select {
+        font-size: 14px;
+        padding: 5px;
+      }
+  
+      .select-arrow:before {
+        border-width: 6px 5px 0 5px;
+      }
+    }
+  }
+  

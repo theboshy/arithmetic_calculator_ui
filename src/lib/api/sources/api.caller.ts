@@ -1,4 +1,4 @@
-import { InternalResponseInterface } from "../interface/internal.response";
+import { InternalResponseInterface } from "../../interface/internal.response";
 
 /**
  * Fetches data from a URL and returns the response.

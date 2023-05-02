@@ -1,0 +1,29 @@
+.collapsible {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.collapsible-title {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.collapsible-body {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    display: none;
+}
+
+.collapsible-body.show {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .collapsible-title {
+        font-size: 1.5rem;
+    }
+}

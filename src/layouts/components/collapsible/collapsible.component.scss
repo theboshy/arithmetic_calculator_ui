@@ -1,0 +1,96 @@
+@import '../../../index.scss';
+
+.collapsible {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.collapsible-title {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    margin: 0;
+    font-size: $normal-text-size;
+    cursor: pointer;
+}
+
+.collapsible-body {
+    background-color: black;
+    font-size: $small-text-size;
+    color: white;
+    padding: 1em 0 !important;
+    opacity: 0;
+    max-width: 50rem;
+}
+
+.collapsible-body.show {
+    opacity: 1;
+}
+
+.container-description {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.capsule-white {
+    background-color: white;
+}
+
+.item {
+    flex-basis: 30%;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin: 5px;
+}
+
+.table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+    .row {
+        display: table-row;
+    }
+
+    .cell {
+        display: table-cell;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+
+        input {
+            width: 5rem;
+            height: 100%;
+            padding: 10px;
+            border: none;
+            background-color: black;
+            color: white;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+
+
+@media (max-width: 600px) {
+    .container {
+        flex-wrap: wrap;
+    }
+
+    .item {
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .collapsible-title {
+        font-size: 1.5rem;
+    }
+}
