@@ -80,6 +80,10 @@ export const apiSources: Versions = {
             operation: {
                 name: "/operation",
                 method: "GET"
+            },
+            record: {
+                name: "/record",
+                method: "GET"
             }
         }
     },
