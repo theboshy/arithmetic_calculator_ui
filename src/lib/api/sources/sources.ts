@@ -82,7 +82,7 @@ export const apiSources: Versions = {
                 method: "GET"
             },
             record: {
-                name: "/record",
+                name: "/userRecord",
                 method: "GET"
             }
         }

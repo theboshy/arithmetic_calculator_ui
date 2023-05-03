@@ -1,16 +1,16 @@
 import { toast } from "react-toastify";
-import { InternalResponseInterface } from "../interface/internal.response";
+import { InternalResponseInterface, InternalResponsePaginatedInterface } from "../interface/internal.response.interface";
 import { fetchUrl } from "./sources/api.caller"
 import { apiSources } from "./sources/sources";
 import { TOAST_OPTIONS } from "../toast.config/toast.config";
 import { getToken } from "../jwt/jwt.helper";
 
-export const userRecordService = async (limit?: string, lastEvaluatedKey?: string): Promise<InternalResponseInterface | null> => {
+export const userRecordGetAllService = async (limit: string = "5", lastEvaluatedKey?: string): Promise<InternalResponseInterface | InternalResponsePaginatedInterface | null> => {
     let queryParams = "";
     const sources = apiSources["v1"];
-    if (limit && lastEvaluatedKey) {
-        queryParams = `?${new URLSearchParams({ limit, lastEvaluatedKey })}`
-    }
+    const refrenceLimit = limit ? limit : "";
+    const referenceLastEvalutaedKey = lastEvaluatedKey ? lastEvaluatedKey : ""
+    queryParams = `?${new URLSearchParams({ limit: refrenceLimit, lastEvaluatedKey: referenceLastEvalutaedKey })}`
     const baseUrl = `${sources.base_url}${sources.endpoints.record.name}${queryParams}`
     const authtenticationHeader = { "x-access-token": getToken() }
     const option = {
@@ -24,7 +24,7 @@ export const userRecordService = async (limit?: string, lastEvaluatedKey?: strin
     if (result.error) {
         switch (result.status) {
             case 404: {
-                toast.error('operations is void', TOAST_OPTIONS);
+                toast.error('there is no more results', TOAST_OPTIONS);
                 break;
             }
             default: {

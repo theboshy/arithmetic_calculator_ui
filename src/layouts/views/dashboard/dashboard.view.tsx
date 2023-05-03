@@ -3,11 +3,15 @@ import { operationGetAllService } from "../../../lib/api/operation.service"
 import { USER_NAME_REFRENCE } from "../../../lib/session.constants/session.constants";
 import "./dashboard.view.scss"
 import { OperationSelector } from "../../components/operation.selector/operation.selector";
+import { DataTableComponent } from "../../components/datatable/data.table.component";
+import { dataTableColumns } from "../../../lib/interface/user.record.interface";
 
 export const DashBoardView: React.FunctionComponent<any> = ({ }) => {
     const [operation, setOperation] = useState<[any] | []>([]);
     const [user, setUser] = useState(sessionStorage.getItem(USER_NAME_REFRENCE));
     const [visibleDiv, setVisibleDiv] = useState<number | null>(0);
+    const [columns, setColums] = useState(dataTableColumns);
+    const [data, setData] = useState([]);
 
     const selectDashBoardOption = (id: number) => setVisibleDiv(id)
     const dashboardOptions = [
@@ -18,15 +22,19 @@ export const DashBoardView: React.FunctionComponent<any> = ({ }) => {
     const dashBoardOptionsResolver = [
         {
             id: 0, render: <OperationSelector operations={operation} />
+        },
+        {
+            id: 1, render: <DataTableComponent
+                columns={columns}
+            />
         }
     ];
-
 
 
     const loadOperations = async () => {
         const operations = await operationGetAllService();
         if (operations) {
-            setOperation(operations.response);
+            setOperation(operations.response.items);
         } else {
             //handle error
         }

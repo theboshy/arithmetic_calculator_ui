@@ -1,4 +1,4 @@
-import { InternalResponseInterface } from "../../interface/internal.response";
+import { InternalResponseInterface, InternalResponsePaginatedInterface } from "../../interface/internal.response.interface";
 
 /**
  * Fetches data from a URL and returns the response.
@@ -8,7 +8,7 @@ import { InternalResponseInterface } from "../../interface/internal.response";
  * @returns The response as the specified type ["json"]
  * @returns maximun waits before killing the request
  */
-export const fetchUrl = async (url: string, options?: any, responseType: string = "json", timeout: number = 5000): Promise<InternalResponseInterface> => {
+export const fetchUrl = async (url: string, options?: any, responseType: string = "json", timeout: number = 5000): Promise<InternalResponseInterface | InternalResponsePaginatedInterface> => {
   let response: InternalResponseInterface = {
     error: false,
     errorTrace: null,

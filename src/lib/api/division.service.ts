@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { InternalResponseInterface } from "../interface/internal.response";
+import { InternalResponseInterface } from "../interface/internal.response.interface";
 import { fetchUrl } from "./sources/api.caller"
 import { apiSources } from "./sources/sources";
 import { TOAST_OPTIONS } from "../toast.config/toast.config";
