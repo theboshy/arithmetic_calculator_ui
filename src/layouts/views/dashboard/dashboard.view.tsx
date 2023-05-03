@@ -5,6 +5,7 @@ import "./dashboard.view.scss"
 import { OperationSelector } from "../../components/operation.selector/operation.selector";
 import { DataTableComponent } from "../../components/datatable/data.table.component";
 import { dataTableColumns } from "../../../lib/interface/user.record.interface";
+import { Link } from "react-router-dom";
 
 export const DashBoardView: React.FunctionComponent<any> = ({ }) => {
     const [operation, setOperation] = useState<[any] | []>([]);
@@ -27,6 +28,9 @@ export const DashBoardView: React.FunctionComponent<any> = ({ }) => {
             id: 1, render: <DataTableComponent
                 columns={columns}
             />
+        }, {
+            id: 2,
+            render: <Link to={{ pathname: "https://github.com/theboshy/arithmetic_calculator_api/blob/main/README.md" }} target="_blank">Click to open HereWeCode (new tab)</Link>
         }
     ];
 
