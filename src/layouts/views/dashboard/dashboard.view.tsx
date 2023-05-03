@@ -30,7 +30,9 @@ export const DashBoardView: React.FunctionComponent<any> = ({ }) => {
             />
         }, {
             id: 2,
-            render: <Link to={{ pathname: "https://github.com/theboshy/arithmetic_calculator_api/blob/main/README.md" }} target="_blank">Click to open HereWeCode (new tab)</Link>
+            render: <a href="https://github.com/theboshy/arithmetic_calculator_api/blob/main/README.md" target="_blank">
+                Click To open the api documentation
+            </a>
         }
     ];
 
