@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./collapsible.component.scss"
 import { OperationView } from "../../../lib/interface/operation.interface";
 import { ButtonComponent } from "../button/button.component";
-import { additionService } from "../../../lib/api/addition.service";
 
 export const CollapsibleComponent: React.FunctionComponent<any> = ({ name, endpoint, version, entryValues, service, id }: OperationView) => {
     const [isOpen, setIsOpen] = useState(false);

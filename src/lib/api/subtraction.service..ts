@@ -26,13 +26,17 @@ export const subtractionService = async (variables: any): Promise<InternalRespon
                 toast.error('invalid data', TOAST_OPTIONS);
                 break;
             }
+            case 401: {
+                toast.error('unauthorized', TOAST_OPTIONS);
+                window.location.href = "/authentication/login"
+                break;
+            }
             case 402: {
                 toast.error('Insufficient funds', TOAST_OPTIONS);
                 break;
             }
             default: {
                 toast.error('internal error occurred', TOAST_OPTIONS);
-                window.location.href = "/authentication/login"
                 break;
             }
         }

@@ -1,5 +1,10 @@
+import { APP_BASE_URL_DEV } from "../../../env";
 
-
+/**
+ * @deprecated
+ * @param environmentName 
+ * @returns 
+ */
 const transformEnvirotmentToDev = (environmentName: string | undefined): string | undefined => {
     let transformedEnvirotmentName: string | undefined = environmentName;
     let defaultEnvVariable = process.env[environmentName!]
@@ -46,7 +51,7 @@ export const findEndpoint = (name: string, version: string): any | undefined => 
 
 export const apiSources: Versions = {
     v1: {
-        base_url: `${transformEnvirotmentToDev('REACT_APP_BASE_URL')}/v1`,
+        base_url: `${APP_BASE_URL_DEV}/v1`,
         endpoints: {
             addition: {
                 name: "/addition",

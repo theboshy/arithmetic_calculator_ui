@@ -27,6 +27,11 @@ export const operationGetAllService = async (limit?: string, lastEvaluatedKey?: 
                 toast.error('operations is void', TOAST_OPTIONS);
                 break;
             }
+            case 401: {
+                toast.error('unauthorized', TOAST_OPTIONS);
+                window.location.href = "/authentication/login"
+                break;
+            }
             default: {
                 toast.error('internal error occurred', TOAST_OPTIONS);
                 break;

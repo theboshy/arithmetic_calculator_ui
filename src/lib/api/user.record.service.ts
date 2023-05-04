@@ -27,6 +27,11 @@ export const userRecordGetAllService = async (limit: string = "5", lastEvaluated
                 toast.error('there is no more results', TOAST_OPTIONS);
                 break;
             }
+            case 401: {
+                toast.error('unauthorized', TOAST_OPTIONS);
+                window.location.href = "/authentication/login"
+                break;
+            }
             default: {
                 toast.error('internal error occurred', TOAST_OPTIONS);
                 break;
