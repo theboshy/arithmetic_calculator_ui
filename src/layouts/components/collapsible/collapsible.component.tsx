@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./collapsible.component.scss"
 import { OperationView } from "../../../lib/interface/operation.interface";
 import { ButtonComponent } from "../button/button.component";
+import uuid from 'node-uuid'
 
 export const CollapsibleComponent: React.FunctionComponent<any> = ({ name, endpoint, version, entryValues, service, id }: OperationView) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ export const CollapsibleComponent: React.FunctionComponent<any> = ({ name, endpo
         }
     }
 
-    return (
+    return <>
         <div className="collapsible">
             <div className="container-description capsule-white">
                 <h2 className="collapsible-title" onClick={() => setIsOpen(!isOpen)}>{name}</h2>
@@ -34,7 +35,7 @@ export const CollapsibleComponent: React.FunctionComponent<any> = ({ name, endpo
                         <div className="table">
                             <div className="row">
                                 {entryValues && entryValues.length > 0 ? entryValues.map((variable: any) =>
-                                    <div className="cell">
+                                    <div className="cell" key={uuid.v4()}>
                                         <input type="text" placeholder={variable.name} onChange={(e: any) => addVariable(variable.variable, e.target.value)} />
                                     </div>
                                 ) : <></>}
@@ -55,6 +56,5 @@ export const CollapsibleComponent: React.FunctionComponent<any> = ({ name, endpo
                 </div>
             </div>
         </div>
-
-    );
+    </>;
 };

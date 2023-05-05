@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { ValidatorFunction } from "../validator.interface";
 import { getToken } from "../../jwt/jwt.helper";
 

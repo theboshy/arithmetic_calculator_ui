@@ -6,9 +6,8 @@ import { QueueHelper, QueueItem, getElementInQueue } from "../../../lib/api/data
 
 export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) => {
     const [data, setData] = useState<any[] | undefined>([]);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [totalRows, setTotalRows] = useState(1);
-    const [paginationPerPage, setPaginationPerPage] = useState(3);
+    const [paginationPerPage] = useState(3);
     const [lastEvaluatedKey, setLastEvaluatedKey] = useState<any>(null);
     const [indexPage, setIndexPage] = useState(1)
     const [queue, setQueue] = useState(new QueueHelper<QueueItem>())
@@ -49,6 +48,7 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) =>
     }
 
     useEffect(() => {
+        handlePerRowsChange(1, 3);
     }, [])
 
     return <DataTable

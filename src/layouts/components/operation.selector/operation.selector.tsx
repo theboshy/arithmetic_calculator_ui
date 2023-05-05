@@ -3,7 +3,7 @@ import { CollapsibleComponent } from "../collapsible/collapsible.component";
 import { OperationInterface, OperationView } from "../../../lib/interface/operation.interface";
 import { findEndpoint, operationEntryValues } from "../../../lib/api/sources/sources";
 import { registerServices } from "../../../lib/api/sources/register.services";
-
+import uuid from 'node-uuid'
 
 export const OperationSelector: React.FunctionComponent<any> = ({ operations }) => {
 
@@ -23,7 +23,7 @@ export const OperationSelector: React.FunctionComponent<any> = ({ operations }) 
     return (
         <>
             {operationList.map((operation: OperationView) => {
-                return <CollapsibleComponent {...operation} />
+                return <CollapsibleComponent key={uuid.v4()} {...operation} />
             })}
         </>
     );
