@@ -1,20 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { userRecordDeleteService, userRecordGetAllService } from "../../../lib/api/user.record.service";
+import React, { useMemo, useState } from "react";
+import { userRecordGetAllService } from "../../../lib/api/user.record.service";
 
 import DataTable from 'react-data-table-component';
 import { QueueHelper, QueueItem, getElementInQueue } from "../../../lib/api/datastructs/queue.helper";
 import { ButtonComponent } from "../button/button.component";
 import { InputDatatableComponent } from "../input/input.datatable.component";
+import { TOAST_OPTIONS } from "../../../lib/toast.config/toast.config";
+import { toast } from "react-toastify";
 
-export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) => {
-    const [data, setData] = useState<any[] | undefined>([]);
+export const DataTableComponent: React.FunctionComponent<any> = ({ columns, initialData }) => {
+    const [data, setData] = useState<any[] | undefined>(initialData);
     const [totalRows, setTotalRows] = useState(1);
-    const [paginationPerPage] = useState(3);
+    const [paginationPerPage] = useState(initialData.length + 1);
     const [lastEvaluatedKey, setLastEvaluatedKey] = useState<any>(null);
     const [indexPage, setIndexPage] = useState(1)
     const [queue, setQueue] = useState(new QueueHelper<QueueItem>())
     const [filterText, setFilterText] = useState('');
     const [selectedRows, setSelectedRows] = useState<any>(false);
+    const [isLoading, setIsLoading] = useState<any>(false);
 
     /*const asyncRecordsToDeleteGenerator = () => {
         return {
@@ -36,6 +39,7 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) =>
             if (result) {
                 window.location.reload();
             }*/
+            toast.error('deprecated function', TOAST_OPTIONS);
         } catch (error) {
             console.log(error)
         }
@@ -74,6 +78,7 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) =>
 
 
     const handlePerRowsChange = async (newPerPage: any, page: any) => {
+        setIsLoading(false)
         if (isGoingBack(newPerPage)) {
             const previousData = getElementInQueue(queue.toArray(), lastEvaluatedKey, "previous")
             if (previousData) {
@@ -103,6 +108,8 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) =>
         }
     }
 
+
+
     return <DataTable
         pagination
         paginationServer
@@ -120,5 +127,6 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns }) =>
         selectableRows
         onSelectedRowsChange={handleChange}
         dense
+        progressPending={isLoading}
     />
 }

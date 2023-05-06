@@ -7,7 +7,9 @@ import { getToken } from "../jwt/jwt.helper";
 
 export const stringGeneratorService = async (variables: any): Promise<InternalResponseInterface | null> => {
     const sources = apiSources["v1"];
-    const baseUrl = `${sources.base_url}${sources.endpoints.stringGenerator.name}`
+    const { operationId } = variables
+    const queryParams = `?${new URLSearchParams({ operationId })}`
+    const baseUrl = `${sources.base_url}${sources.endpoints.stringGenerator.name}${queryParams}`
     const authtenticationHeader = { "x-access-token": getToken() }
     const option = {
         method: sources.endpoints.operation.method,
