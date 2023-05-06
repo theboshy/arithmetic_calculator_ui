@@ -1,6 +1,6 @@
 import './input.component.scss'
 
-export const InputComponent: React.FunctionComponent<any> = ({ field, id, name, label, type, placeholder, autoComplete = "off", large = false, readOnly = false }) => {
+export const InputComponent: React.FunctionComponent<any> = ({ field, id, name, label, type, placeholder, autoComplete = "off", large = false, readOnly = false, }) => {
     //const input = document.querySelector(`input[id='${id}']`);
     return <>
         <div className="floating-label">

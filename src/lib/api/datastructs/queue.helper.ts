@@ -45,13 +45,10 @@ export const getElementInQueue = (queue: any, id: string, direction: string = "n
             } else if (direction === 'previous' && index > 0) {
                 item = queue[index - 1];
             } else {
-                toast.error('internal error occurred', TOAST_OPTIONS);
             }
         } else {
-            toast.error('internal error occurred', TOAST_OPTIONS);
         }
     } catch (error) {
-        toast.error('internal error occurred', TOAST_OPTIONS);
     }
     return item;
 }

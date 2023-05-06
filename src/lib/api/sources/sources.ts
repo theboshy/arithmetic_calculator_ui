@@ -89,6 +89,10 @@ export const apiSources: Versions = {
             record: {
                 name: "/userRecord",
                 method: "GET"
+            },
+            recordDelete: {
+                name: "/userRecord",
+                method: "PUT"
             }
         }
     },

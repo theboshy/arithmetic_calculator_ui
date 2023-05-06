@@ -42,3 +42,39 @@ export const userRecordGetAllService = async (limit: string = "5", lastEvaluated
         return result;
     }
 }
+
+
+export const userRecordDeleteService = async (userRecordId: string): Promise<InternalResponseInterface | InternalResponsePaginatedInterface | null> => {
+    const sources = apiSources["v1"];
+    const baseUrl = `${sources.base_url}${sources.endpoints.recordDelete.name}`
+    const authtenticationHeader = { "x-access-token": getToken() }
+    const option = {
+        method: sources.endpoints.recordDelete.method,
+        headers: {
+            "Content-Type": "application/json",
+            ...authtenticationHeader
+        },
+        body: JSON.stringify({ userRecordId })
+    }
+    const result = await fetchUrl(baseUrl, option);
+    if (result.error) {
+        switch (result.status) {
+            case 404: {
+                toast.error('user record not found', TOAST_OPTIONS);
+                break;
+            }
+            case 401: {
+                toast.error('unauthorized', TOAST_OPTIONS);
+                window.location.href = "/authentication/login"
+                break;
+            }
+            default: {
+                toast.error('internal error occurred', TOAST_OPTIONS);
+                break;
+            }
+        }
+        return null;
+    } else {
+        return result;
+    }
+}
