@@ -1,23 +1,33 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { userRecordGetAllService } from "../../../lib/api/user.record.service";
 
 import DataTable from 'react-data-table-component';
-import { QueueHelper, QueueItem, getElementInQueue } from "../../../lib/api/datastructs/queue.helper";
+import { QueueHelper, getElementInQueue } from "../../../lib/api/datastructs/queue.helper";
 import { ButtonComponent } from "../button/button.component";
 import { InputDatatableComponent } from "../input/input.datatable.component";
 import { TOAST_OPTIONS } from "../../../lib/toast.config/toast.config";
 import { toast } from "react-toastify";
+import './data.table.component.scss'
+import { ArrowComponent } from "../arrow.component.tsx/arrow.component";
+
+export const useInitialDataToQue = (initialDataArray: any): any => {
+    if (initialDataArray && initialDataArray.length > 0) {
+        const lastItem = initialDataArray[initialDataArray.length - 1];
+        return [{ id: lastItem.id, items: initialDataArray }]
+    }
+    return []
+}
 
 export const DataTableComponent: React.FunctionComponent<any> = ({ columns, initialData }) => {
-    const [data, setData] = useState<any[] | undefined>(initialData);
-    const [totalRows, setTotalRows] = useState(1);
-    const [paginationPerPage] = useState(initialData.length + 1);
+    const [data, setData] = useState<any[]>(useInitialDataToQue(initialData));
+    const [totalRows, setTotalRows] = useState(useInitialDataToQue(initialData).length + 1);
+    const [paginationPerPage] = useState(3);
     const [lastEvaluatedKey, setLastEvaluatedKey] = useState<any>(null);
-    const [indexPage, setIndexPage] = useState(1)
-    const [queue, setQueue] = useState(new QueueHelper<QueueItem>())
+    const [queue, setQueue] = useState(new QueueHelper(useInitialDataToQue(initialData)))
     const [filterText, setFilterText] = useState('');
     const [selectedRows, setSelectedRows] = useState<any>(false);
-    const [isLoading, setIsLoading] = useState<any>(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [indexPage, setIndexPage] = useState(1)
 
     /*const asyncRecordsToDeleteGenerator = () => {
         return {
@@ -59,13 +69,46 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns, init
         );
     }, [filterText, selectedRows]);
 
-    const filteredItems = data!.filter(
+    const filteredItems = data?.filter(
         item => item.operationId && item.operationId.toLowerCase().includes(filterText.toLowerCase()),
     )
 
-    const handleChange = (selectedRows: any) => {
+
+    const handleRowSelectionChange = (selectedRows: any) => {
         setSelectedRows(selectedRows);
     };
+
+    const handleNextInPagination = async () => {
+        if (!isLoading) {
+            if (lastEvaluatedKey === "last") {
+
+            } else {
+                const nextData = getElementInQueue(queue, lastEvaluatedKey, "next")
+                if (nextData && nextData.items) {
+                    setLastEvaluatedKey(nextData.id)
+                    setData(nextData.items)
+                } else {
+                    const records = await userRecordGetAllService(`${paginationPerPage}`, lastEvaluatedKey);
+                    if (records) {
+                        updateShowingData(records.response.items, records?.response.lastEvaluatedKey)
+                    } else {
+                        setLastEvaluatedKey("last")
+                    }
+                }
+            }
+        }
+    }
+
+    const handlePreviousInPagination = async () => {
+        if (!isLoading) {
+            const previousData = getElementInQueue(queue, lastEvaluatedKey, "previous")
+            if (previousData && previousData.items) {
+                setLastEvaluatedKey(previousData.id)
+                setData(previousData.items)
+            }
+        }
+    }
+
 
     const isGoingBack = (newPerPage: number) => {
         let result = false;
@@ -78,37 +121,43 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns, init
 
 
     const handlePerRowsChange = async (newPerPage: any, page: any) => {
-        setIsLoading(false)
         if (isGoingBack(newPerPage)) {
-            const previousData = getElementInQueue(queue.toArray(), lastEvaluatedKey, "previous")
-            if (previousData) {
-                setLastEvaluatedKey(previousData.id)
-                setData(previousData.items)
-            }
-        } else {
-            if (lastEvaluatedKey === "last") {
+            await handlePreviousInPagination();
+            return
+        }
+        await handleNextInPagination()
+        return
+    }
 
-            } else {
-                const nextData = getElementInQueue(queue.toArray(), lastEvaluatedKey, "next")
-                if (nextData) {
-                    setLastEvaluatedKey(nextData.id)
-                    setData(nextData.items)
-                } else {
-                    const records = await userRecordGetAllService(`${paginationPerPage}`, lastEvaluatedKey);
-                    if (records) {
-                        setData(records.response.items)
-                        setTotalRows(totalRows + records.response.items.length)
-                        let lastEvaluatedKey = records?.response.lastEvaluatedKey ? records?.response.lastEvaluatedKey.id : "last";
-                        setLastEvaluatedKey(lastEvaluatedKey)
-                        queue.enqueue({ id: records?.response.lastEvaluatedKey ? records?.response.lastEvaluatedKey.id : "last", items: records.response.items })
-                        setQueue(queue)
-                    }
-                }
-            }
+
+    const updateShowingData = (records: any, lastEvaluatedKey: any) => {
+        setData(records)
+        setTotalRows(totalRows + records.length)
+        let key = lastEvaluatedKey ? lastEvaluatedKey?.id : "last";
+        setLastEvaluatedKey(key)
+        addItemToQue({ id: key, items: records } as any)
+    }
+
+    const addItemToQue = (item: any) => {
+        try {
+            queue.enqueue(item.items, item.id)
+            setQueue(queue)
+        } catch (error) {
+            //handle error trying to put repeated id in que
         }
     }
 
 
+    useEffect(() => {
+        async function loadRecordsInitialData() {
+            const records = await userRecordGetAllService("3");
+            if (records) {
+                updateShowingData(records.response.items, records?.response.lastEvaluatedKey);
+            }
+            setIsLoading(false)
+        }
+        loadRecordsInitialData();
+    }, []);
 
     return <DataTable
         pagination
@@ -120,13 +169,22 @@ export const DataTableComponent: React.FunctionComponent<any> = ({ columns, init
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         columns={columns}
-        data={filteredItems!}
+        data={filteredItems}
         paginationTotalRows={totalRows}
         onChangePage={handlePerRowsChange}
         responsive
         selectableRows
-        onSelectedRowsChange={handleChange}
+        onSelectedRowsChange={handleRowSelectionChange}
         dense
-        progressPending={isLoading}
+        highlightOnHover
+        paginationIconNext={
+            <ArrowComponent direction={"left"} active={lastEvaluatedKey !== "last"} />
+        }
+        paginationIconPrevious={
+            <ArrowComponent direction={"right"} active={getElementInQueue(queue, lastEvaluatedKey, "previous") !== undefined} />
+        }
+        paginationIconLastPage={
+            null
+        }
     />
 }

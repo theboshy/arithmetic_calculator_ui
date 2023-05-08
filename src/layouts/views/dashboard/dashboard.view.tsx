@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { operationGetAllService } from "../../../lib/api/operation.service"
 import { USER_NAME_REFRENCE } from "../../../lib/session.constants/session.constants";
 import "./dashboard.view.scss"
@@ -12,7 +12,6 @@ export const DashBoardView: React.FunctionComponent<any> = () => {
     const [user] = useState(sessionStorage.getItem(USER_NAME_REFRENCE));
     const [visibleDiv, setVisibleDiv] = useState<number | null>(0);
     const [columns] = useState(dataTableColumns);
-    const [initialData, setInitialData] = useState([]);
 
     const selectDashBoardOption = (id: number) => setVisibleDiv(id)
     const dashboardOptions = [
@@ -27,7 +26,6 @@ export const DashBoardView: React.FunctionComponent<any> = () => {
         {
             id: 1, render: <DataTableComponent
                 columns={columns}
-                initialData={initialData}
             />
         }, {
             id: 2,
@@ -36,14 +34,6 @@ export const DashBoardView: React.FunctionComponent<any> = () => {
             </a>
         }
     ];
-
-
-    const loadRecordsInitialData = async () => {
-        const records = await userRecordGetAllService("3");
-        if (records) {
-            setInitialData(records.response.items)
-        }
-    }
 
     const loadOperations = async () => {
         const operations = await operationGetAllService();
@@ -56,7 +46,6 @@ export const DashBoardView: React.FunctionComponent<any> = () => {
 
     useEffect(() => {
         loadOperations();
-        loadRecordsInitialData();
     }, []);
 
     const renderOperations = () => {

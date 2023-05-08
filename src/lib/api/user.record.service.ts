@@ -8,23 +8,23 @@ import { getToken } from "../jwt/jwt.helper";
 export const userRecordGetAllService = async (limit: string = "5", lastEvaluatedKey?: string): Promise<InternalResponseInterface | InternalResponsePaginatedInterface | null> => {
     let queryParams = "";
     const sources = apiSources["v1"];
-    const refrenceLimit = limit ? limit : "";
-    const referenceLastEvalutaedKey = lastEvaluatedKey ? lastEvaluatedKey : ""
-    queryParams = `?${new URLSearchParams({ limit: refrenceLimit, lastEvaluatedKey: referenceLastEvalutaedKey })}`
+    const referenceLimit = limit ? limit : "";
+    const referenceLastEvaluatedKey = lastEvaluatedKey ? lastEvaluatedKey : ""
+    queryParams = `?${new URLSearchParams({ limit: referenceLimit, lastEvaluatedKey: referenceLastEvaluatedKey })}`
     const baseUrl = `${sources.base_url}${sources.endpoints.record.name}${queryParams}`
-    const authtenticationHeader = { "x-access-token": getToken() }
+    const authenticationHeader = { "x-access-token": getToken() }
     const option = {
         method: sources.endpoints.operation.method,
         headers: {
             "Content-Type": "application/json",
-            ...authtenticationHeader
+            ...authenticationHeader
         },
     }
     const result = await fetchUrl(baseUrl, option);
     if (result.error) {
         switch (result.status) {
             case 404: {
-                toast.error('there is no more results', TOAST_OPTIONS);
+                toast.error('there is no user records results', TOAST_OPTIONS);
                 break;
             }
             case 401: {
