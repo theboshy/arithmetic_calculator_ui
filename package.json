@@ -1,0 +1,63 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.25",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.1",
+    "formik": "^2.2.9",
+    "node-uuid": "^1.4.8",
+    "react": "^18.2.0",
+    "react-data-table-component": "^7.5.3",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.2",
+    "sass": "^1.62.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
+  },
+  "scripts": {
+    "start:dev": "set NODE_ENV=dev&& set PORT=1010 && react-scripts start",
+    "start:preview": "rimraf ./build && npm run build:production && cd ./build && http-server --push-state",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build:production": "react-scripts build",
+    "test:jest": "jest"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-react": "^7.18.6",
+    "@types/node-uuid": "^0.0.29",
+    "babel-jest": "^29.5.0",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.2.0",
+    "rimraf": "^5.0.0",
+    "spa-http-server": "^0.9.0"
+  }
+}
